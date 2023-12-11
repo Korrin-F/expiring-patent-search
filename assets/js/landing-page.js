@@ -18,15 +18,15 @@ function loadLandingPage() {
     // ---------------------------
 
     // Main Header Row
-    createDivRow("main-header", containerMain);
+    createRow("main-header", containerMain, "div");
     var mainHeaderDiv = $('#main-header-row');
     mainHeaderDiv.append("<h2 class='col'>Expiring Patent Search</h2>");
 
     // Date Range Selector Row
-    createDivRow(mainSearchOption, containerMain);
+    createRow(mainSearchOption, containerMain, "form");
 
     // Sub-header Row title Optional 
-    createDivRow("sub-header", containerMain);
+    createRow("sub-header", containerMain, "div");
     var subHeaderDiv = $('#sub-header-row');
     subHeaderDiv.append("<h3 class='col'>Optional</h3>");
 
@@ -36,7 +36,7 @@ function loadLandingPage() {
 
     //  --- Rows for Optional Options ---
     for(var item in optionalSearchOptions){
-        createDivRow(optionalSearchOptions[item], optionsContainer);
+        createRow(optionalSearchOptions[item], optionsContainer, "form");
     }
     //  --- Header Columns for Optional Options ---
     for(var item in optionalSearchOptions){
@@ -61,24 +61,35 @@ function loadLandingPage() {
     createDropdown('End Year', 'endYear', currentYear-5, currentYear+5, expiryYearRangeRow);
 
     //  --- KEYWORD SEARCH ---
-
+    createTextFieldCol("Keyword", $("#keyword-row"));
     //  --- PATENT ID SEARCH ---
-
+    createTextFieldCol("Patent ID", $("#patentID-row"));
     //  --- APPLICANT SEARCH ---
-
+    createTextFieldCol("Applicant First Name", $("#applicant-row"));
+    createTextFieldCol("Applicant Last Name", $("#applicant-row"));
+    createTextFieldCol("Applicant ID", $("#applicant-row"));
     //  --- ASSIGNEE SEARCH ---
-
+    createTextFieldCol("Assignee First Name", $("#assignee-row"));
+    createTextFieldCol("Assignee Last Name", $("#assignee-row"));
+    createTextFieldCol("Assignee ID", $("#assignee-row"));
     //  --- INVENTOR SEARCH ---
-
+    createTextFieldCol("Inventor First Name", $("#inventor-row"));
+    createTextFieldCol("Inventor Last Name", $("#inventor-row"));
+    createTextFieldCol("Inventor ID", $("#inventor-row"));
     //  --- ORGANIZATION SEARCH ---
-
+    createTextFieldCol("Organization Name", $("#organization-row"));
+    var radioButtonDiv = $('<div id="organization-radio-col" class="col"></div>');
+    $("#organization-row").append(radioButtonDiv);
+    createRadioButton("Applicant", radioButtonDiv);
+    createRadioButton("Assignee", radioButtonDiv);
+    createRadioButton("Inventor", radioButtonDiv);
 
 
     // ---------------------------
     //  SEARCH BUTTON 
     // ---------------------------
 
-    createDivRow("search-button", containerMain);
+    createRow("search-button", containerMain, "form");
     var searchButtonDiv = $('#search-button-row');
     searchButtonDiv.append("<button id='search-button' class='btn btn-primary'>Search</button>");
 }
@@ -103,14 +114,14 @@ function createDropdown(labelText, dropdownId, startYear, endYear, container) {
 }
 
 // --- CREATE A ROW DIV ---
-function createDivRow(item, container) {
+function createRow(item, container, type) {
     // create a row div for each search option and the headers 
     // append each row div to the container
     
     // add the word row at the end of each item in the array
     item += "-row";
     // create a div with the id of the item in the array
-    container.append(`<div id="${item}" class="row"></div>`); 
+    container.append(`<${type} id="${item}" class="row"></${type}>`); 
 }
 
 // --- CREATE A HEADER COLUMN DIV ---
@@ -123,16 +134,25 @@ function createDivSearchHeaderCol(item){
     col.append(header);
 }
 
+// --- CREATE A TEXT FIELD COL ---
+function createTextFieldCol(item, container){
+    // var row = $("#" + item + "-row");
+    var col = $(`<div id="${item}-col" class="col"></div>`);
+    container.append(col);
+    var textField = $(`<input type="text" class="form-control" id="${item}-text-field" placeholder="${item}" aria-label="${item}">`);
+    col.append(textField);
+}
 
-
-
-    // 1. search by keyword of patent title
-    // 2. search by patent number
-    // 3. search by inventor
-    // 4. search by assignee
-    
-
-
+// --- CREATE A RADIO BUTTON ---
+function createRadioButton(text, container){
+    var div = $('<div class="form-check"></div>');
+    var id = text.toLowerCase().replace(" ", "-") + "-radio";
+    var radio = $(`<input class="form-check-input" type="radio" name="${id}" id="${id}">`);
+    var label = $(`<label class="form-check-label" for="${id}"></label>`).text(text);
+    div.append(radio);
+    div.append(label);
+    container.append(div);
+}
 
 // ------------------------------
 // Collect inputs and do stuff when search buttons are clicked 
