@@ -77,6 +77,10 @@ function loadLandingPage() {
     // ---------------------------
     //  SEARCH BUTTON 
     // ---------------------------
+
+    createDivRow("search-button", containerMain);
+    var searchButtonDiv = $('#search-button-row');
+    searchButtonDiv.append("<button id='search-button' class='btn btn-primary'>Search</button>");
 }
 
 // --- EXPIRY YEAR RANGE SELECTOR ---
