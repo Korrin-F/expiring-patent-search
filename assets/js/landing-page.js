@@ -2,8 +2,17 @@
 
 // what year is it? 
 var currentYear = new Date().getFullYear();
-var mainSearchOption = "expiryYearRange";
-var optionalSearchOptions = ["keyword", "patentID", "applicant", "assignee", "inventor", "organization"]
+var mainSearchOption = {
+    expiryYearRange: "Year Range of Expiry"
+};
+var optionalSearchOptions = {
+    keyword: "Keyword", 
+    patentID:"Patent ID", 
+    applicant: "Applicant", 
+    assignee:"Assignee", 
+    inventor:"Inventor", 
+    organization:"Organization"
+};
 
 
 function loadLandingPage() {
@@ -23,7 +32,7 @@ function loadLandingPage() {
     mainHeaderDiv.append("<h2 class='col'>Expiring Patent Search</h2>");
 
     // Date Range Selector Row
-    createRow(mainSearchOption, containerMain, "form");
+    createRow(Object.keys(mainSearchOption)[0], containerMain, "form");
 
     // Sub-header Row title Optional 
     createRow("sub-header", containerMain, "div");
@@ -35,12 +44,17 @@ function loadLandingPage() {
     containerMain.append(optionsContainer);
 
     //  --- Rows for Optional Options ---
-    for(var item in optionalSearchOptions){
-        createRow(optionalSearchOptions[item], optionsContainer, "form");
+    for(var value in optionalSearchOptions){
+        createRow(value, optionsContainer, "form");
     }
     //  --- Header Columns for Optional Options ---
-    for(var item in optionalSearchOptions){
-        createDivSearchHeaderCol(optionalSearchOptions[item]);
+    for(const key in optionalSearchOptions){
+        console.log(key);
+        if (optionalSearchOptions.hasOwnProperty(key)) {
+        const value = optionalSearchOptions[key];
+        console.log(value);
+        createDivSearchHeaderCol(key,value);
+        }
     }
 
 
@@ -51,7 +65,15 @@ function loadLandingPage() {
 
     //  --- EXPIRY DATE RANGE SELECTOR --- 
     // createDivRow(mainSearchOption, containerMain);
-    createDivSearchHeaderCol(mainSearchOption);
+    for(const key in mainSearchOption){
+        console.log(key);
+        if (mainSearchOption.hasOwnProperty(key)) {
+        const value = mainSearchOption[key];
+        console.log(value);
+        createDivSearchHeaderCol(key,value);
+        }
+    }
+    
     // Get the current year
     const currentYear = new Date().getFullYear();
     const expiryYearRangeRow = $('#expiryYearRange-row');
@@ -114,23 +136,24 @@ function createDropdown(labelText, dropdownId, startYear, endYear, container) {
 }
 
 // --- CREATE A ROW DIV ---
-function createRow(item, container, type) {
+function createRow(key, container, type) {
     // create a row div for each search option and the headers 
     // append each row div to the container
     
     // add the word row at the end of each item in the array
-    item += "-row";
+    key += "-row";
     // create a div with the id of the item in the array
-    container.append(`<${type} id="${item}" class="row"></${type}>`); 
+    container.append(`<${type} id="${key}" class="row"></${type}>`); 
 }
 
 // --- CREATE A HEADER COLUMN DIV ---
-function createDivSearchHeaderCol(item){
-    var row = $("#" + item + "-row");
-    item += "-col";
-    var col = $(`<div id="${item}" class="col"></div>`);
+function createDivSearchHeaderCol(key,value){
+    console.log(key);
+    var row = $("#" + key + "-row");
+    key += "-col";
+    var col = $(`<div id="${key}" class="col"></div>`);
     row.append(col);
-    var header = $(`<h4>header_placement for ${item}</h4>`).attr('id', item + "-header");
+    var header = $(`<h4>${value}</h4>`).attr('id', key + "-header");
     col.append(header);
 }
 
