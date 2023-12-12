@@ -1,5 +1,5 @@
 // updates the content in the Main Body section
-$(document).ready(function() {
+//$(document).ready(function() {
     // Global Variables 
     const currentYear = new Date().getFullYear();
     const mainSearchOption = {
@@ -21,7 +21,7 @@ $(document).ready(function() {
         // ---------------------------
 
         const containerMain = $('#landing');
-        const formContainer = $('<div id="form-container" class="container"></div>');
+        const formContainer = $('<form id="form-container" class="container"></form>');
         containerMain.append(formContainer);
 
         // ---------------------------
@@ -60,7 +60,7 @@ $(document).ready(function() {
 
 
         // ---------------------------
-        // SEARCH FEILDS 
+        // INPUT FEILDS 
         // ---------------------------
 
         //  --- EXPIRY DATE RANGE SELECTOR --- 
@@ -77,14 +77,24 @@ $(document).ready(function() {
         createDropdown('End Year', 'endYear', currentYear-5, currentYear+5, expiryYearRangeRow);
 
 
-        // --- TEXT FIELDS ---
-        for(const key in optionalSearchOptions){
-            if (optionalSearchOptions.hasOwnProperty(key)) {
-            const value = optionalSearchOptions[key];
-            createTextField(key, value, $("#" + key + "-row"));
-            }
-        }
-        // --- RADIO BUTTONS ---
+        //  --- KEYWORD SEARCH ---
+        createTextField("keyword","Keyword", $("#keyword-row"));
+        //  --- PATENT ID SEARCH ---
+        createTextField("patentID","Patent ID", $("#patentID-row"));
+        //  --- APPLICANT SEARCH ---
+        createTextField("applicantFirstName","Applicant First Name", $("#applicant-row"));
+        createTextField("applicantLastName","Applicant Last Name", $("#applicant-row"));
+        createTextField("applicantID","Applicant ID", $("#applicant-row"));
+        //  --- ASSIGNEE SEARCH ---
+        createTextField("assigneeFistName","Assignee First Name", $("#assignee-row"));
+        createTextField("assigneeLastName","Assignee Last Name", $("#assignee-row"));
+        createTextField("assigneeID","Assignee ID", $("#assignee-row"));
+        //  --- INVENTOR SEARCH ---
+        createTextField("inventorFirstName","Inventor First Name", $("#inventor-row"));
+        createTextField("inventorLastName","Inventor Last Name", $("#inventor-row"));
+        createTextField("inventorID","Inventor ID", $("#inventor-row"));
+        //  --- ORGANIZATION SEARCH ---
+        createTextField("organizationName","Organization Name", $("#organization-row"));
         const radioButtonDiv = $('<div id="organization-radio-col" class="col"></div>');
         $("#organization-row").append(radioButtonDiv);
         createRadioButton("Applicant", radioButtonDiv);
@@ -98,7 +108,8 @@ $(document).ready(function() {
 
         createRow("search-button", formContainer, "div");
         const searchButtonDiv = $('#search-button-row');
-        searchButtonDiv.append("<button id='search-button' class='btn btn-primary'>Search</button>");
+        searchButtonDiv.append("<button id='search-button' class='btn btn-primary' type='submit' form='form-container' value='Submit' >Search</button>");
+        // type='submit' form='form-container' value='Submit'
     }
 
 
@@ -151,7 +162,8 @@ $(document).ready(function() {
     // send info to search results page 
 
     // set an event listener on the search button
-    $('#form-container').submit(function(event){
+    // main is used becasue thats what is loaded into the dom first
+    $('#main').on("submit", '#form-container', function(event) {
         event.preventDefault();
         // get the inputs from the search fields
         let inputs = getInputs();
@@ -164,26 +176,42 @@ $(document).ready(function() {
     function getInputs(){
         // get the inputs from the search fields
         let inputs = {};
-        // get the year range
-        inputs.startYear = $('#startYear').val();
-        inputs.endYear = $('#endYear').val();
+        // get the expiry date range
+        inputs.expiryYearRange = {
+            startYear : $('#startYear').val(),
+            endYear : $('#endYear').val()
+        }
         // get the keyword
         inputs.keyword = $('#keyword-text-field').val();
         // get the patent id
         inputs.patentID = $('#patentID-text-field').val();
         // get the applicant
-        inputs.applicant = $('#applicant-text-field').val();
+        inputs.applicant = {
+            firstName : $('#applicantFirstName-text-field').val(),
+            lastName : $('#applicantLastName-text-field').val(),
+            id : $('#applicantID-text-field').val()
+        }
         // get the assignee
-        inputs.assignee = $('#assignee-text-field').val();
+        inputs.assignee = {
+            firstName : $('#assigneeFirstName-text-field').val(),
+            lastName : $('#assigneeLastName-text-field').val(),
+            id : $('#assigneeID-text-field').val()
+        }
         // get the inventor
-        inputs.inventor = $('#inventor-text-field').val();
+        inputs.inventor = {
+            firstName : $('#inventorFirstName-text-field').val(),
+            lastName : $('#inventorLastName-text-field').val(),
+            id : $('#inventorID-text-field').val()
+        }
         // get the organization
-        inputs.organization = $('#organization-text-field').val();
-        // get the organization type
-        inputs.organizationType = $('input[name=organization-type]:checked').val();
+        inputs.organization = {
+            name : $('#organizationName-text-field').val(),
+            type : $('input[name=organization-type-radio]:checked').val()
+        }
+        // return the inputs
         return inputs;
     }
 
 // load the landing page when the dom has been loaded
-loadLandingPage();
-});
+//loadLandingPage();
+//});

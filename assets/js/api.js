@@ -55,4 +55,4 @@ function getAPI(url, headers){
 }
 // testing the API call for trading view 
 // for some reason it is working when using 123 as the api key and csrf token
-callPatentView("legacy", {q:{"_and":[{"_gte":{"app_date":"2007-01-04"}},{"_lte":{"app_date":"2007-12-31"}}]}, f:["patent_title"]})
+//callPatentView("legacy", {q:{"_and":[{"_gte":{"app_date":"2007-01-04"}},{"_lte":{"app_date":"2007-12-31"}}]}, f:["patent_title"]})
