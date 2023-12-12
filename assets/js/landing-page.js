@@ -116,19 +116,31 @@ function loadLandingPage() {
     searchButtonDiv.append("<button id='search-button' class='btn btn-primary'>Search</button>");
 }
 
-// --- EXPIRY YEAR RANGE SELECTOR ---
+// --- CREATE A DROPDOWN DATE LIST ---
 // Function to create and append label and select tags
+// function createDropdown(labelText, dropdownId, startYear, endYear, container) {
+//     const col = $('<div class="col"></div>');
+//     container.append(col);
+//     // Create and append label
+//     col.append(`<label for="${dropdownId}">${labelText}:</label>`);
+//     // Create and append select
+//     const select = $(`<select id="${dropdownId}"></select>`);
+//     col.append(select);
+//     // Populate select with a range of years
+//     for (let year = startYear; year <= endYear; year++) {
+//     select.append(`<option value="${year}">${year}</option>`);
+//     }
+// }
+
 function createDropdown(labelText, dropdownId, startYear, endYear, container) {
-    const col = $('<div class="col"></div>');
-    container.append(col);
 
     // Create and append label
-    col.append(`<label for="${dropdownId}">${labelText}:</label>`);
-
+    // col.append(`<label for="${dropdownId}">${labelText}:</label>`);
     // Create and append select
-    const select = $(`<select id="${dropdownId}"></select>`);
-    col.append(select);
-
+    const select = $(`<select id="${dropdownId}" class="form-select"></select>`);
+    let title = $(`<option selected>${labelText}</option>`);
+    select.append(title);
+    container.append(select);
     // Populate select with a range of years
     for (let year = startYear; year <= endYear; year++) {
     select.append(`<option value="${year}">${year}</option>`);
