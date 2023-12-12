@@ -147,23 +147,36 @@ function createRow(key, container, type) {
 }
 
 // --- CREATE A HEADER COLUMN DIV ---
+// function createDivSearchHeaderCol(key,value){
+//     console.log(key);
+//     var row = $("#" + key + "-row");
+//     key += "-col";
+//     var col = $(`<div id="${key}" class="col"></div>`);
+//     row.append(col);
+//     var header = $(`<h4>${value}</h4>`).attr('id', key + "-header");
+//     col.append(header);
+// }
+
 function createDivSearchHeaderCol(key,value){
     console.log(key);
     var row = $("#" + key + "-row");
-    key += "-col";
-    var col = $(`<div id="${key}" class="col"></div>`);
-    row.append(col);
-    var header = $(`<h4>${value}</h4>`).attr('id', key + "-header");
-    col.append(header);
+    // testing bootstraps input group
+    row.attr('class', 'input-group');
+    var header = $(`<span class="input-group-text" id="${key}-header"><h4>${value}</h4></span>`);
+    row.append(header);
 }
 
 // --- CREATE A TEXT FIELD COL ---
+// function createTextFieldCol(item, container){
+//     var col = $(`<div id="${item}-col" class="col"></div>`);
+//     container.append(col);
+//     var textField = $(`<input type="text" class="form-control" id="${item}-text-field" placeholder="${item}" aria-label="${item}">`);
+//     col.append(textField);
+// }
+
 function createTextFieldCol(item, container){
-    // var row = $("#" + item + "-row");
-    var col = $(`<div id="${item}-col" class="col"></div>`);
-    container.append(col);
     var textField = $(`<input type="text" class="form-control" id="${item}-text-field" placeholder="${item}" aria-label="${item}">`);
-    col.append(textField);
+    container.append(textField);
 }
 
 // --- CREATE A RADIO BUTTON ---
