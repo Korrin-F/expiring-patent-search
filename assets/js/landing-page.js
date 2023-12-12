@@ -1,11 +1,11 @@
 // updates the content in the Main Body section
 
-// what year is it? 
-var currentYear = new Date().getFullYear();
-var mainSearchOption = {
+// Global Variables 
+const currentYear = new Date().getFullYear();
+const mainSearchOption = {
     expiryYearRange: "Year Range of Expiry"
 };
-var optionalSearchOptions = {
+const optionalSearchOptions = {
     keyword: "Keyword", 
     patentID:"Patent ID", 
     applicant: "Applicant", 
@@ -28,7 +28,7 @@ function loadLandingPage() {
 
     // Main Header Row
     createRow("main-header", containerMain, "div");
-    var mainHeaderDiv = $('#main-header-row');
+    const mainHeaderDiv = $('#main-header-row');
     mainHeaderDiv.append("<h2 class='col'>Expiring Patent Search</h2>");
 
     // Date Range Selector Row
@@ -36,15 +36,15 @@ function loadLandingPage() {
 
     // Sub-header Row title Optional 
     createRow("sub-header", containerMain, "div");
-    var subHeaderDiv = $('#sub-header-row');
+    const subHeaderDiv = $('#sub-header-row');
     subHeaderDiv.append("<h3 class='col'>Optional</h3>");
 
     // create a container to hold all the options
-    var optionsContainer = $('<div id="options-container" class="container-fluid"></div>');
+    const optionsContainer = $('<div id="options-container" class="container-fluid"></div>');
     containerMain.append(optionsContainer);
 
     //  --- Rows for Optional Options ---
-    for(var value in optionalSearchOptions){
+    for(const value in optionalSearchOptions){
         createRow(value, optionsContainer, "form");
     }
     //  --- Header Columns for Optional Options ---
@@ -53,7 +53,7 @@ function loadLandingPage() {
         if (optionalSearchOptions.hasOwnProperty(key)) {
         const value = optionalSearchOptions[key];
         console.log(value);
-        createDivSearchHeaderCol(key,value);
+        createSearchHeader(key,value);
         }
     }
 
@@ -64,18 +64,12 @@ function loadLandingPage() {
     // ---------------------------
 
     //  --- EXPIRY DATE RANGE SELECTOR --- 
-    // createDivRow(mainSearchOption, containerMain);
     for(const key in mainSearchOption){
-        console.log(key);
         if (mainSearchOption.hasOwnProperty(key)) {
         const value = mainSearchOption[key];
-        console.log(value);
-        createDivSearchHeaderCol(key,value);
+        createSearchHeader(key,value);
         }
     }
-    
-    // Get the current year
-    const currentYear = new Date().getFullYear();
     const expiryYearRangeRow = $('#expiryYearRange-row');
     // Create and append start year dropdown with a range of years
     createDropdown('Start Year', 'startYear', currentYear-5, currentYear+5, expiryYearRangeRow); 
@@ -100,7 +94,7 @@ function loadLandingPage() {
     createTextFieldCol("Inventor ID", $("#inventor-row"));
     //  --- ORGANIZATION SEARCH ---
     createTextFieldCol("Organization Name", $("#organization-row"));
-    var radioButtonDiv = $('<div id="organization-radio-col" class="col"></div>');
+    const radioButtonDiv = $('<div id="organization-radio-col" class="col"></div>');
     $("#organization-row").append(radioButtonDiv);
     createRadioButton("Applicant", radioButtonDiv);
     createRadioButton("Assignee", radioButtonDiv);
@@ -112,33 +106,15 @@ function loadLandingPage() {
     // ---------------------------
 
     createRow("search-button", containerMain, "form");
-    var searchButtonDiv = $('#search-button-row');
+    const searchButtonDiv = $('#search-button-row');
     searchButtonDiv.append("<button id='search-button' class='btn btn-primary'>Search</button>");
 }
 
-// --- CREATE A DROPDOWN DATE LIST ---
-// Function to create and append label and select tags
-// function createDropdown(labelText, dropdownId, startYear, endYear, container) {
-//     const col = $('<div class="col"></div>');
-//     container.append(col);
-//     // Create and append label
-//     col.append(`<label for="${dropdownId}">${labelText}:</label>`);
-//     // Create and append select
-//     const select = $(`<select id="${dropdownId}"></select>`);
-//     col.append(select);
-//     // Populate select with a range of years
-//     for (let year = startYear; year <= endYear; year++) {
-//     select.append(`<option value="${year}">${year}</option>`);
-//     }
-// }
 
 function createDropdown(labelText, dropdownId, startYear, endYear, container) {
-
-    // Create and append label
-    // col.append(`<label for="${dropdownId}">${labelText}:</label>`);
     // Create and append select
     const select = $(`<select id="${dropdownId}" class="form-select"></select>`);
-    let title = $(`<option selected>${labelText}</option>`);
+    const title = $(`<option selected>${labelText}</option>`);
     select.append(title);
     container.append(select);
     // Populate select with a range of years
@@ -149,54 +125,32 @@ function createDropdown(labelText, dropdownId, startYear, endYear, container) {
 
 // --- CREATE A ROW DIV ---
 function createRow(key, container, type) {
-    // create a row div for each search option and the headers 
-    // append each row div to the container
-    
-    // add the word row at the end of each item in the array
     key += "-row";
-    // create a div with the id of the item in the array
     container.append(`<${type} id="${key}" class="row"></${type}>`); 
 }
 
-// --- CREATE A HEADER COLUMN DIV ---
-// function createDivSearchHeaderCol(key,value){
-//     console.log(key);
-//     var row = $("#" + key + "-row");
-//     key += "-col";
-//     var col = $(`<div id="${key}" class="col"></div>`);
-//     row.append(col);
-//     var header = $(`<h4>${value}</h4>`).attr('id', key + "-header");
-//     col.append(header);
-// }
 
-function createDivSearchHeaderCol(key,value){
+// --- CREATE A SEARCH HEADER ---
+function createSearchHeader(key,value){
     console.log(key);
-    var row = $("#" + key + "-row");
-    // testing bootstraps input group
+    const row = $("#" + key + "-row");
     row.attr('class', 'input-group');
-    var header = $(`<span class="input-group-text" id="${key}-header"><h4>${value}</h4></span>`);
+    const header = $(`<span class="input-group-text" id="${key}-header"><h4>${value}</h4></span>`);
     row.append(header);
 }
 
-// --- CREATE A TEXT FIELD COL ---
-// function createTextFieldCol(item, container){
-//     var col = $(`<div id="${item}-col" class="col"></div>`);
-//     container.append(col);
-//     var textField = $(`<input type="text" class="form-control" id="${item}-text-field" placeholder="${item}" aria-label="${item}">`);
-//     col.append(textField);
-// }
-
+// --- CREATE A TEXT FIELD ---
 function createTextFieldCol(item, container){
-    var textField = $(`<input type="text" class="form-control" id="${item}-text-field" placeholder="${item}" aria-label="${item}">`);
+    const textField = $(`<input type="text" class="form-control" id="${item}-text-field" placeholder="${item}" aria-label="${item}">`);
     container.append(textField);
 }
 
 // --- CREATE A RADIO BUTTON ---
 function createRadioButton(text, container){
-    var div = $('<div class="form-check"></div>');
-    var id = text.toLowerCase().replace(" ", "-") + "-radio";
-    var radio = $(`<input class="form-check-input" type="radio" name="${id}" id="${id}">`);
-    var label = $(`<label class="form-check-label" for="${id}"></label>`).text(text);
+    const div = $('<div class="form-check-inline"></div>');
+    const id = text.toLowerCase().replace(" ", "-") + "-radio";
+    const radio = $(`<input class="form-check-input" type="radio" name="${id}" id="${id}">`);
+    const label = $(`<label class="form-check-label" for="${id}"></label>`).text(text);
     div.append(radio);
     div.append(label);
     container.append(div);
