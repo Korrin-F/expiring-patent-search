@@ -86,7 +86,7 @@
         createTextField("applicantLastName","Applicant Last Name", $("#applicant-row"));
         createTextField("applicantID","Applicant ID", $("#applicant-row"));
         //  --- ASSIGNEE SEARCH ---
-        createTextField("assigneeFistName","Assignee First Name", $("#assignee-row"));
+        createTextField("assigneeFirstName","Assignee First Name", $("#assignee-row"));
         createTextField("assigneeLastName","Assignee Last Name", $("#assignee-row"));
         createTextField("assigneeID","Assignee ID", $("#assignee-row"));
         //  --- INVENTOR SEARCH ---
@@ -206,7 +206,9 @@
         // get the organization
         inputs.organization = {
             name : $('#organizationName-text-field').val(),
-            type : $('input[name=organization-type-radio]:checked').val()
+            applicant : $('input[name=applicant-radio]:checked').length > 0,
+            assignee : $('input[name=assignee-radio]:checked').length > 0,
+            inventor : $('input[name=inventor-radio]:checked').length > 0
         }
         // return the inputs
         return inputs;
