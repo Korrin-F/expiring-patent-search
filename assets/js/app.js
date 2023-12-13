@@ -67,3 +67,10 @@ function loadHeader(){
 
 // Call the initializeApp function when the DOM is ready
 document.addEventListener('DOMContentLoaded', initializeApp);
+
+// Selecting and changing the active tab
+// const triggerEl = document.querySelector('#myTab button[data-bs-target="#profile"]')
+// bootstrap.Tab.getInstance(triggerEl).show() // Select tab by name
+
+// creating a new tab
+// const bsTab = new bootstrap.Tab('#myTabs')

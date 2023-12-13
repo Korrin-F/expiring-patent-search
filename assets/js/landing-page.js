@@ -22,9 +22,10 @@ function loadLandingPage() {
     // updates the content in the Main Body section
     $('#landing').attr('class','show'); 
     // ---------------------------
-
+    const tabContainer = $('#search-tab-pane');
     const containerMain = $('#landing');
-    const formContainer = $('<form id="form-container" class="container"></form>');
+    const formContainer = $('<form id="form-container" class="container-fluid"></form>');
+    tabContainer.append(containerMain);
     containerMain.append(formContainer);
 
     // ---------------------------
@@ -45,7 +46,7 @@ function loadLandingPage() {
     subHeaderDiv.append("<h3 class='col'>Optional</h3>");
 
     // create a container to hold all the options
-    const optionsContainer = $('<div id="options-container" class="container-fluid"></div>');
+    const optionsContainer = $('<div id="options-container" class="container-fluid p-0"></div>');
     formContainer.append(optionsContainer);
 
     //  --- Rows for Optional Options ---
