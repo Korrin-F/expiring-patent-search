@@ -49,7 +49,7 @@ function loadPatentViewPage(data){
     // --- Main Content ---
     const mainSection = $('#patentView-container');
     const pageName = mainSection.attr('id').slice(0, -10); // patentView
-    const temp = $("#footer")
+    const tempContainer = $("#footer")
 
     // --- Header ---
     createRow(pageName + "-header", mainSection, "div");
@@ -62,7 +62,7 @@ function loadPatentViewPage(data){
     const idRow = $("#save-id-row");
     idRow.addClass("justify-content-center my-2");
 
-    // --- ID Group ---
+    // --- ID Col & Group ---
     createCol(idRow, "id");
     const idCol = $("#id-col");
     idCol.addClass("col-3");
@@ -79,6 +79,44 @@ function loadPatentViewPage(data){
     const buttonCol = $("#button-col");
     buttonCol.addClass("col-1");
     $("<button type='button' class='btn btn-primary w-100 h-100' id='save-button'>Save</button>").appendTo(buttonCol);
+
+    // --- Filing & Expiring Date ---
+    // create a row to hold the dates
+    createRow("dates", mainSection, "div");
+    const datesRow = $("#dates-row");
+    datesRow.addClass("justify-content-center");
+    // create a column to hold the filing date
+    createCol(datesRow, "filing"); 
+    const filingCol = $("#filing-col");
+    filingCol.addClass("col-5");
+    // create an input group to hold the filing date
+    createInputGroup(filingCol, "filing");
+    const filingGroup = $("#filing-group");
+    filingGroup.addClass("justify-content-center");
+    // create a header field
+    createInputGroupHeader(filingGroup, "filing", "Filing Date");
+    // create a text field
+    createInputGroupText(filingGroup, "filing", filingDate);
+    // create a column to hold the expiring date
+    createCol(datesRow, "expiring");
+    const expiringCol = $("#expiring-col");
+    expiringCol.addClass("col-5");
+    // create an input group to hold the expiring date
+    createInputGroup(expiringCol, "expiring");
+    const expiringGroup = $("#expiring-group");
+    expiringGroup.addClass("justify-content-center");
+    // create a header field
+    createInputGroupHeader(expiringGroup, "expiring", "Expiring Date");
+    // create a text field
+    // check if the patent_processing_time is null
+    if (patent_processing_time == null){
+        // if it is null then create the group with the text "unknown"
+        createInputGroupText(expiringGroup, "expiring", "unknown");
+    }else{
+        
+    // else
+    // take the patent processing time (in days) and add it to the filing date
+    createInputGroupText(expiringGroup, "expiring", "expiring date");
     
 }
 
