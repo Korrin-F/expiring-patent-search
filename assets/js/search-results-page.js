@@ -20,20 +20,13 @@ function loadSearchResultsPage(data){
     // --- Info Row ---
     createRow(pageName + "-info", mainContent, "div");
     const infoRow = $("#" + pageName + "-info-row");
-    // paragraph "Showing" 
-    infoRow.append($(`<p>Showing </p>`));
-    // span data.count
-    infoRow.append($(`<span>${resultsData.count}</span>`));
-    // paragrah "of"
-    infoRow.append($(`<p> of </p>`));
-    // span data.total_patent_count
-    infoRow.append($(`<span>${resultsData.total_patent_count}</span>`));
     // if total_patent_count > 100000
     if (resultsData.total_patent_count == 100000) {
-        infoRow.append($(`<p>+ </p>`));
+        infoRow.append($(`<p>Showing <span>${resultsData.count}</span> of <span>${resultsData.total_patent_count.toLocaleString()}</span>+ patents</p>`));
+    }else{
+        infoRow.append($(`<p>Showing <span>${resultsData.count}</span> of <span>${resultsData.total_patent_count.toLocaleString()}</span> patents.</p>`));
     }
-    // then add paragragh "+"
-    infoRow.append($(`<p> patents.</p>`));
+
 
     
     // --- Results Container ---
