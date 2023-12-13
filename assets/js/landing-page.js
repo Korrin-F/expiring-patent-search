@@ -131,7 +131,9 @@ function createDropdown(labelText, dropdownId, startYear, endYear, container) {
 // --- CREATE A ROW DIV ---
 function createRow(key, container, type) {
     key += "-row";
-    container.append(`<${type} id="${key}" class="row"></${type}>`); 
+    const row = (`<${type} id="${key}" class="row"></${type}>`); 
+    container.append(row); 
+    return row
 }
 
 

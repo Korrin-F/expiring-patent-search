@@ -109,8 +109,6 @@ function showTab(tabName) {
 }
 function hideTabs(skipTab) {
     for (var key in pageViews) {
-        console.log("key: " + key );
-        console.log("pageViews[key]: " + pageViews[key]);
         if (pageViews.hasOwnProperty(key)) {
             if (key !== skipTab) {
                 let tabPane = $('#' + key + '-pane');

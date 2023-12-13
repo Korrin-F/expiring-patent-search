@@ -63,9 +63,11 @@ $('#main').on("click", '#searchResults-container', async function(event) {
     console.log("searchResults-container clicked");
     // if the target is a button
     if (event.target.tagName === "BUTTON") {
+        event.stopPropagation(); //the click was registering twice
+
         let id = $(event.target).attr("data-id");
         let query = {"patent_id":`${id}`}
-        let fields = ["patent_id","patent_title","patent_year","app_date","patent_processing_time","assignee_first_name","assignee_last_name","assignee_organization","assignee_type","inventor_first_name","inventor_last_name"]
+        let fields = ["patent_id","patent_title","patent_abstract","patent_year","app_date","patent_processing_time","assignee_first_name","assignee_last_name","assignee_organization","assignee_type","inventor_first_name","inventor_last_name"]
         let params = {q:query, f:fields}
 
         try {
@@ -76,8 +78,5 @@ $('#main').on("click", '#searchResults-container', async function(event) {
             // Handle errors here
             console.error(error);
         }
-    }
-
-    
-    
+    } 
 });
