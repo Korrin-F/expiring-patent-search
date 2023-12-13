@@ -6,4 +6,13 @@
   --green-teal: #008080;
   --gold-yellow: #FFD700;
   --graphite-charcoal: #333333;
+
+  --dark-green: rgba(40, 66, 81, 1.00);
+  --mint: rgba(197, 230, 204, 1.00);
+  --mid-green: rgba(69, 107, 117, 1.00);
+  --ivory: rgba(255, 254, 238, 1.00);
+}
+
+#logo-row {
+  background-color: var(--dark-green);
 }

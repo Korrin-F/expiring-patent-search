@@ -36,7 +36,7 @@ function navigateToPage(newPage, data){
 // Function to initialize the app
 function initializeApp() {
     // Load the header and footer data
-
+    loadHeader();
     // create a section for each page with an id using the page views array and a class of hide
     for(var view in pageViews){
         var section = $('<section>').attr('id', pageViews[view]).addClass('hide');
@@ -54,6 +54,15 @@ function hideAllPages(){
         // grab all the page sections in the array and change their class to hide
         $('#' + pageViews[view]).attr('class', 'hide');
     }
+}
+
+function loadHeader(){
+    // create a header row
+    $('#header').append($('<div id="logo-row" class="row py-2"></div>'));
+    // add logo column
+    $('#logo-row').append($('<div id="logo-col" class="col-3 m-auto"></div>'));
+    // add logo
+    $('#logo-col').append($('<img id="logo" class="img-fluid" src="assets/images/logo.png" alt="logo"/>'));
 }
 
 // Call the initializeApp function when the DOM is ready
