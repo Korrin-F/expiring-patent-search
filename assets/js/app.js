@@ -1,3 +1,4 @@
+
 // controls initialization of the app and the main view
 
 // initialize the app

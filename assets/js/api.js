@@ -3,7 +3,7 @@
 // Patent View API
 // ------------------------------
 //const patentViewSecrets = require('../../secrets.js');
-import patentViewSecrets from '../../secrets.js';
+//import patentViewSecrets from './secrets.js';
 
 const patentViewApi = {
     urls : {
@@ -12,12 +12,13 @@ const patentViewApi = {
     },
     headers : {
         'Accept': 'application/json',
-        'Authorization': patentViewSecrets.apiKey, 
-        'X-Requested-With': patentViewSecrets.csrfToken 
+        'Authorization': '123', //patentViewSecrets.apiKey, 
+        'X-Requested-With': '123' //patentViewSecrets.csrfToken 
     }
 }
 
 function callPatentView(urlType, params){
+    console.log("Params: " + params)
     // url will be either beta or legacy
     let url = "";
     switch(urlType){
@@ -38,7 +39,7 @@ function callPatentView(urlType, params){
     return response;
 }
 
-function getAPI(url, headers){
+ function getAPI(url, headers){
     fetch(url, {
         method: 'GET',
         headers: headers
@@ -56,3 +57,11 @@ function getAPI(url, headers){
 // testing the API call for trading view 
 // for some reason it is working when using 123 as the api key and csrf token
 //callPatentView("legacy", {q:{"_and":[{"_gte":{"app_date":"2007-01-04"}},{"_lte":{"app_date":"2007-12-31"}}]}, f:["patent_title"]})
+callPatentView("legacy", {q:{
+    "_and": [
+      {"_or": [{"patent_type": "Plant"}, {"patent_type": "Utility"}]},
+      {"patent_id": "10000574"}
+    ]
+  }, f:["patent_title"]})
+
+//export {callPatentView};
