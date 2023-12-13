@@ -22,10 +22,9 @@ function loadLandingPage() {
     // updates the content in the Main Body section
     $('#landing').attr('class','show'); 
     // ---------------------------
-    const tabContainer = $('#landing-pane');
-    const containerMain = $('#landing');
+
+    const containerMain = $('#landing-container');
     const formContainer = $('<form id="form-container" class="container-fluid"></form>');
-    tabContainer.append(containerMain);
     containerMain.append(formContainer);
 
     // ---------------------------

@@ -51,11 +51,7 @@ function navigateToPage(newPage, data){
 function initializeApp() {
     // Load the header and footer data
     loadHeader();
-    // create a section for each page with an id using the page views array and a class of hide
-    // for(var view in pageViews){
-    //     var section = $('<section>').attr('id', pageViews[view]).addClass('hide');
-    //     $('#main').append(section);
-    // }
+
     // Create navigation links dynamically
     var tabsContainer = $('#myTabs');
     for (var key in pageViews) {
@@ -92,8 +88,10 @@ function initializeApp() {
     // Create sections for each page with a class of 'hide'
     for (var key in pageViews) {
         if (pageViews.hasOwnProperty(key)) {
-            var section = $('<section>').attr('id', key).addClass('hide');
-            $('#main').append(section);
+            var section = $('<section>').attr('id', key + "-container").addClass('container-fluid');
+            // append this section to its associated tab pane
+            $('#' + key + '-pane').append(section);
+            
         }
     }
 
