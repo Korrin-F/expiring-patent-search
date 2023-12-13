@@ -49,7 +49,6 @@ function loadPatentViewPage(data){
     // --- Main Content ---
     const mainSection = $('#patentView-container');
     const pageName = mainSection.attr('id').slice(0, -10); // patentView
-    const tempContainer = $("#footer")
 
     // --- Header ---
     createRow(pageName + "-header", mainSection, "div");
@@ -109,15 +108,14 @@ function loadPatentViewPage(data){
     createInputGroupHeader(expiringGroup, "expiring", "Expiring Date");
     // create a text field
     // check if the patent_processing_time is null
-    if (patent_processing_time == null){
-        // if it is null then create the group with the text "unknown"
-        createInputGroupText(expiringGroup, "expiring", "unknown");
-    }else{
-        
-    // else
-    // take the patent processing time (in days) and add it to the filing date
-    createInputGroupText(expiringGroup, "expiring", "expiring date");
-    
+    if (patent_processing_time !== undefined && patent_processing_time !== null) {
+        const expiryDate = addDaysToDate(filingDate, patent_processing_time);
+        createInputGroupText(expiringGroup, "expiring", expiryDate);
+    } else {
+        const newDateStr = addYearsToDate(filingDate, 20);
+        createInputGroupText(expiringGroup, "expiring", "est-"+ newDateStr);
+    }
+
 }
 
 function createInputGroup(appendTo, id){
@@ -141,4 +139,21 @@ function createCol(appendTo, id){
     let col = $("<div class='col'>");
     col.attr("id", id + "-col");
     appendTo.append(col);
+}
+function addDaysToDate(dateStr, processingTime) {
+    const originalDate = new Date(dateStr);
+    const newDate = new Date(originalDate.getTime() + processingTime * 24 * 60 * 60 * 1000);
+    return formatAsDateString(newDate);
+}
+function addYearsToDate(dateStr, years) {
+    const originalDate = new Date(dateStr);
+    const newDate = new Date(originalDate);
+    newDate.setFullYear(originalDate.getFullYear() + years);
+    return formatAsDateString(newDate);
+}
+function formatAsDateString(date) {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
 }
