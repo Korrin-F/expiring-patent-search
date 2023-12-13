@@ -31,10 +31,13 @@ function loadSearchResultsPage(data){
     // --- Results Container ---
     const resultsContainer = $(`<div id="${pageName}-container" class="container-fluid"></div>`);
     mainContent.append(resultsContainer);
+
     // --- Results Row ---
     // div with class list group and append to resultsContainer
     const listGroup = $('<div class="list-group"></div>');
     resultsContainer.append(listGroup);
+
+    // --- Result Buttons ---
     //cycle through the pantents array 
     for (let object in resultsData.patents){
         let id = resultsData.patents[object].patent_id;
@@ -47,3 +50,34 @@ function loadSearchResultsPage(data){
 
  
 }
+
+
+// grab the patent id (data-id) from the button that was clicked
+// let query = {"patent_id":"${id}"}
+// data to request
+// let fields = ["patent_id","patent_title","patent_year","app_date","patent_processing_time","assignee_first_name","assignee_last_name","assignee_organization","assignee_type","inventor_first_name","inventor_last_name"]
+// let params = {q:query, f:fields}
+
+$('#main').on("click", '#searchResults-container', async function(event) {
+    event.preventDefault();
+    console.log("searchResults-container clicked");
+    // if the target is a button
+    if (event.target.tagName === "BUTTON") {
+        let id = $(event.target).attr("data-id");
+        let query = {"patent_id":`${id}`}
+        let fields = ["patent_id","patent_title","patent_year","app_date","patent_processing_time","assignee_first_name","assignee_last_name","assignee_organization","assignee_type","inventor_first_name","inventor_last_name"]
+        let params = {q:query, f:fields}
+
+        try {
+            let response = await callPatentView("legacy", params);
+            console.log(response);
+            navigateToPage('patentView', response);
+        } catch (error) {
+            // Handle errors here
+            console.error(error);
+        }
+    }
+
+    
+    
+});
