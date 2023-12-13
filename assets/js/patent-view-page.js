@@ -146,6 +146,25 @@ function loadPatentViewPage(data){
     }
     // create a col to hold the inventor
     createCol(assigneeInventorRow, "inventor");
+    const inventorCol = $("#inventor-col");
+    // add a header to the inventor col
+    createInputGroupHeader(inventorCol, "inventor", "Inventors");
+    // create a list group to hold the inventors
+    createlistGroup(inventorCol, "inventor");
+    const inventorListGroup = $("#inventor-list-group");
+    for(let inventor in inventorsArray){
+        // create a list group item for each inventor attribute
+        let name = "";
+        if (inventorsArray[inventor].inventor_first_name !== undefined && inventorsArray[inventor].inventor_first_name !== null) {
+            name += inventorsArray[inventor].inventor_first_name + " ";
+        }
+        if (inventorsArray[inventor].inventor_last_name !== undefined && inventorsArray[inventor].inventor_last_name !== null) {
+            name += inventorsArray[inventor].inventor_last_name;
+        }
+        if (name !== "") {
+            createListGroupItem(inventorListGroup, "inventor", name);
+        }
+    }
 
 }
 
