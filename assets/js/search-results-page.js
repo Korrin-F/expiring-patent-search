@@ -15,11 +15,12 @@ function loadSearchResultsPage(data){
     // --- Header ---
     createRow(pageName + "-header", mainContent, "div");
     const headerRow = $("#" + pageName + "-header-row");
-    headerRow.append($(`<h2 id="${pageName}-header">Search Results</h2>`));
+    headerRow.append($(`<h2 id="${pageName}-header" class="text-center">Search Results</h2>`));
 
     // --- Info Row ---
     createRow(pageName + "-info", mainContent, "div");
     const infoRow = $("#" + pageName + "-info-row");
+    infoRow.addClass("text-center");
     // if total_patent_count > 100000
     if (resultsData.total_patent_count == 100000) {
         infoRow.append($(`<p>Showing <span>${resultsData.count}</span> of <span>${resultsData.total_patent_count.toLocaleString()}</span>+ patents</p>`));
@@ -27,10 +28,22 @@ function loadSearchResultsPage(data){
         infoRow.append($(`<p>Showing <span>${resultsData.count}</span> of <span>${resultsData.total_patent_count.toLocaleString()}</span> patents.</p>`));
     }
 
-
-    
     // --- Results Container ---
-
+    const resultsContainer = $(`<div id="${pageName}-container" class="container-fluid"></div>`);
+    mainContent.append(resultsContainer);
+    // --- Results Row ---
+    // div with class list group and append to resultsContainer
+    const listGroup = $('<div class="list-group"></div>');
+    resultsContainer.append(listGroup);
+    //cycle through the pantents array 
+    for (let object in resultsData.patents){
+        let id = resultsData.patents[object].patent_id;
+        let title = resultsData.patents[object].patent_title;
+        // create a button like this -> <button type="button" class="list-group-item list-group-item-action" data-id="${id}"></button>
+        let button = $(`<button type="button" class="list-group-item list-group-item-action" data-id="${id}">${title}</button>`);
+        // append the button to the list group
+        listGroup.append(button);
+    }
 
  
 }
