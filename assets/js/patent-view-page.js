@@ -166,6 +166,19 @@ function loadPatentViewPage(data){
         }
     }
 
+    // --- Abstract ---
+    // create a row to hold the abstract
+    createRow("abstract", mainSection, "div");
+    const abstractRow = $("#abstract-row");
+    // create a col to hold the abstract
+    createCol(abstractRow, "abstract");
+    const abstractCol = $("#abstract-col");
+    // add a header to the abstract col
+    createInputGroupHeader(abstractCol, "abstract", "Abstract");
+    // create a text field to hold the abstract
+    createListGroupItem(abstractCol, "abstract", abstract);
+
+
 }
 
 function createInputGroup(appendTo, id){
