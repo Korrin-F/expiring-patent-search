@@ -177,13 +177,13 @@ $('#main').on("submit", '#form-container', function(event) {
     let response = callPatentView("legacy", query);
     console.log(response);
     // call the search results page with the inputs
-    //navigateToPage('searchResults', inputs);
+    navigateToPage('searchResults', response);
 
 });
 
 
 
-
+// ---- GET FORM FIELD DATA ----
 function getInputs(){
     // get the inputs from the search fields
     let inputs = {};

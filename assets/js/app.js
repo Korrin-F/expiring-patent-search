@@ -11,7 +11,7 @@ var pageViews = {
     patentView: "Patent View",
     favorites: "Favorites"
 }
-//var pageViews = ['landing', 'searchResults', 'patentView', 'favorites'];
+
 
 // switch page views 
 function navigateToPage(newPage, data){
@@ -22,18 +22,22 @@ function navigateToPage(newPage, data){
     // show/hide pages based on page name
     switch(newPage){
         case 'landing':
+            hideTabs('landing');
             loadLandingPage();
-            showTab('landing');
+            showTab('landing');         
             break;
         case 'searchResults':
+            hideTabs('searchResults');
             loadSearchResultsPage(data);
-            showTab('searchResults');
+            showTab('searchResults');           
             break;
         case 'patentView':
+            hideTabs('patentView');
             loadPatentViewPage(data);
             showTab('patentView');
             break;
         case 'favorites':
+            hideTabs('favorites');
             loadFavoritesPage();
             showTab('favorites');
             break;
@@ -104,6 +108,20 @@ function showTab(tabName) {
     tabPane.addClass('active show');
     let tab = $('#' + tabName + '-tab');
     tab.attr('aria-selected', true).addClass('active');
+}
+function hideTabs(skipTab) {
+    for (var key in pageViews) {
+        console.log("key: " + key );
+        console.log("pageViews[key]: " + pageViews[key]);
+        if (pageViews.hasOwnProperty(key)) {
+            if (key !== skipTab) {
+                let tabPane = $('#' + key + '-pane');
+                tabPane.removeClass('active show');
+                let tab = $('#' + key + '-tab');
+                tab.attr('aria-selected', false).removeClass('active');
+            }
+        }
+    }
 }
 
 function hideAllPages(){
