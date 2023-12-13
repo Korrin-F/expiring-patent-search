@@ -116,6 +116,37 @@ function loadPatentViewPage(data){
         createInputGroupText(expiringGroup, "expiring", "est-"+ newDateStr);
     }
 
+    // --- Assignee & Inventor Row ---
+    // create a row to hold the assignee and inventor
+    createRow("assignee-inventor", mainSection, "div");
+    const assigneeInventorRow = $("#assignee-inventor-row");
+    // create a col to hold the assignee
+    createCol(assigneeInventorRow, "assignee");
+    const assigneeCol = $("#assignee-col");
+    // add a header to the assingee col
+    createInputGroupHeader(assigneeCol, "assignee", "Assignees");
+    // create a list group to hold the assignees
+    createlistGroup(assigneeCol, "assignee");
+    const assigneeListGroup = $("#assignee-list-group");
+    for(let assignee in assigneesArray){
+        // create a list group item for each assignee attribute
+        let name = "";
+        if (assigneesArray[assignee].assignee_first_name !== undefined && assigneesArray[assignee].assignee_first_name !== null) {
+            name += assigneesArray[assignee].assignee_first_name + " ";
+        }
+        if (assigneesArray[assignee].assignee_last_name !== undefined && assigneesArray[assignee].assignee_last_name !== null) {
+            name += assigneesArray[assignee].assignee_last_name;
+        }
+        if (name !== "") {
+            createListGroupItem(assigneeListGroup, "assignee", name);
+        }
+        if (assigneesArray[assignee].assignee_organization !== undefined && assigneesArray[assignee].assignee_organization !== null) {
+            createListGroupItem(assigneeListGroup, "assignee", assigneesArray[assignee].assignee_organization);
+        }
+    }
+    // create a col to hold the inventor
+    createCol(assigneeInventorRow, "inventor");
+
 }
 
 function createInputGroup(appendTo, id){
@@ -156,4 +187,15 @@ function formatAsDateString(date) {
     const month = String(date.getMonth() + 1).padStart(2, '0');
     const day = String(date.getDate()).padStart(2, '0');
     return `${year}-${month}-${day}`;
+}
+function createlistGroup(appendTo, id){
+    let listGroup = $("<ul class='list-group'>");
+    listGroup.attr("id", id + "-list-group");
+    listGroup.appendTo(appendTo);
+}
+function createListGroupItem(appendTo, id, text){
+    let listGroupItem = $("<li class='list-group-item'>");
+    listGroupItem.attr("id", id + "-list-group-item");
+    listGroupItem.text(text);
+    listGroupItem.appendTo(appendTo);
 }
