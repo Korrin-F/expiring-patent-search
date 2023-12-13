@@ -39,22 +39,68 @@ function loadPatentViewPage(data){
     console.log("patent_processing_time: " + patent_processing_time);
     console.log("inventorsArray: " + inventorsArray);
     console.log("assigneesArray: " + assigneesArray);
-
-    // --- Main Content ---
-    const mainContent = $('#patentView-container');
-    const pageName = mainContent.attr('id').slice(0, -10); // patentView
-
-    // --- Header ---
-    createRow(pageName + "-header", mainContent, "div");
-    const headerRow = $("#" + pageName + "-header-row");
-    headerRow.append($(`<h2 id="${pageName}-header" class="text-center">${title}</h2>`));
-
-
     // total inventors
     let totalInventors = resultsData.patents[0].inventors.length; 
     console.log("totalInventors: " + totalInventors);
     // total assignees
     let totalAssignees = resultsData.patents[0].assignees.length;
     console.log("totalAssignees: " + totalAssignees);
+
+    // --- Main Content ---
+    const mainSection = $('#patentView-container');
+    const pageName = mainSection.attr('id').slice(0, -10); // patentView
+    const temp = $("#footer")
+
+    // --- Header ---
+    createRow(pageName + "-header", mainSection, "div");
+    const headerRow = $("#" + pageName + "-header-row");
+    headerRow.append($(`<h2 id="${pageName}-header" class="text-center">${title}</h2>`));
+    console.log("made header row");
+    // --- ID and Save Button Row ---
+    createRow("save-id", $('#patentView-container'), "div");
+    console.log("made save-id row");
+    const idRow = $("#save-id-row");
+    idRow.addClass("justify-content-center my-2");
+
+    // --- ID Group ---
+    createCol(idRow, "id");
+    const idCol = $("#id-col");
+    idCol.addClass("col-3");
+    createInputGroup(idCol, "id");
+
+    // --- ID Header ---
+    createInputGroupHeader($("#id-group"), "id", "Patent ID");
+
+    // --- ID Text ---
+    createInputGroupText($("#id-group"), "id", id);
+
+    // --- Save Button ---
+    createCol(idRow, "button");
+    const buttonCol = $("#button-col");
+    buttonCol.addClass("col-1");
+    $("<button type='button' class='btn btn-primary w-100 h-100' id='save-button'>Save</button>").appendTo(buttonCol);
     
+}
+
+function createInputGroup(appendTo, id){
+    let inputGroup = $("<div class='input-group'>");
+    inputGroup.attr("id", id + "-group");
+    inputGroup.appendTo(appendTo);
+}
+function createInputGroupHeader(appendTo, id, text){
+    let inputGroupSpan = $("<span class='input-group-text'></span>");
+    let header = $(`<h4 class='field-header' id="${id}-header">${text}: </h4>`)
+    header.appendTo(inputGroupSpan); 
+    inputGroupSpan.appendTo(appendTo);
+}
+function createInputGroupText(appendTo, id, text){
+    let inputGroupSpan = $("<span class='input-group-text field-text'>");
+    let content = $(`<h5 class='field-text pt-1' id="${id}-text">${text}</h5>`)
+    content.appendTo(inputGroupSpan);
+    inputGroupSpan.appendTo(appendTo);
+}
+function createCol(appendTo, id){
+    let col = $("<div class='col'>");
+    col.attr("id", id + "-col");
+    appendTo.append(col);
 }
