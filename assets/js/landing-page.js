@@ -166,18 +166,22 @@ function createRadioButton(text, container){
 
 // set an event listener on the search button
 // main is used becasue thats what is loaded into the dom first
-$('#main').on("submit", '#form-container', function(event) {
+$('#main').on("submit", '#form-container', async function(event) {
     event.preventDefault();
     // get the inputs from the search fields
     let inputs = getInputs();
-    console.log(inputs);
+    //console.log(inputs);
     let query = buildQueryLegacy(inputs);
-    console.log(query);
-    let response = callPatentView("legacy", query);
-    console.log(response);
-    // call the search results page with the inputs
-    navigateToPage('searchResults', response);
+    //console.log(query);
 
+    try {
+        let response = await callPatentView("legacy", query);
+        console.log(response);
+        navigateToPage('searchResults', response);
+    } catch (error) {
+        // Handle errors here
+        console.error(error);
+    }
 });
 
 

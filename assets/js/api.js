@@ -16,12 +16,9 @@ const patentViewApi = {
         'X-Requested-With': '123' //patentViewSecrets.csrfToken 
     }
 }
-
-function callPatentView(urlType, params){
-    console.log("Params: " + params)
-    // url will be either beta or legacy
+function callPatentView(urlType, params) {
     let url = "";
-    switch(urlType){
+    switch (urlType) {
         case "beta":
             url = patentViewApi.urls.beta;
             break;
@@ -31,27 +28,24 @@ function callPatentView(urlType, params){
         default:
             url = patentViewApi.urls.legacy;
     }
-    // data will be an object with the parameters for the API call q & f
-    // construct the full url with parameters
+
     var fullURL = url + "q=" + JSON.stringify(params.q) + "&f=" + JSON.stringify(params.f);
-    // call the API
-    let response = getAPI(fullURL, patentViewApi.headers);
-    return response;
+
+    // Return a Promise
+    return getAPI(fullURL, patentViewApi.headers);
 }
 
+
  function getAPI(url, headers){
-    fetch(url, {
+    // Return the fetch Promise
+    return fetch(url, {
         method: 'GET',
         headers: headers
     })
     .then(response => response.json())
-    .then(data => {
-        // do something with the data
-        console.log(data);
-    })
     .catch(error => {
-        // handle the error
         console.error(error);
+        throw error; // Re-throw the error to be caught by the caller
     });
 }
 // testing the API call for trading view 
