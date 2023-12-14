@@ -2,8 +2,7 @@
 
 // Patent View API
 // ------------------------------
-//const patentViewSecrets = require('../../secrets.js');
-//import patentViewSecrets from './secrets.js';
+
 
 const patentViewApi = {
     urls : {

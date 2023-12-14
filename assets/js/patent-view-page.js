@@ -205,8 +205,9 @@ function createCol(appendTo, id){
 }
 function addDaysToDate(dateStr, processingTime) {
     const originalDate = new Date(dateStr);
-    const newDate = new Date(originalDate.getTime() + processingTime * 24 * 60 * 60 * 1000);
-    return formatAsDateString(newDate);
+    let newDate = new Date(originalDate.getTime() + processingTime * 24 * 60 * 60 * 1000);
+    newDate = formatAsDateString(newDate);
+    return addYearsToDate(newDate, 20);
 }
 function addYearsToDate(dateStr, years) {
     const originalDate = new Date(dateStr);

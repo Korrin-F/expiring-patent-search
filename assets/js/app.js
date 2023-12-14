@@ -33,6 +33,7 @@ function navigateToPage(newPage, data){
             break;
         case 'patentView':
             hideTabs('patentView');
+            clearContent('patentView-container');
             loadPatentViewPage(data);
             showTab('patentView');
             break;
@@ -85,7 +86,7 @@ function initializeApp() {
         }
     }
 
-    // Create sections for each page with a class of 'hide'
+    // Create sections for each page with a class of 
     for (var key in pageViews) {
         if (pageViews.hasOwnProperty(key)) {
             var section = $('<section>').attr('id', key + "-container").addClass('container-fluid');
@@ -95,7 +96,7 @@ function initializeApp() {
         }
     }
 
-    
+    loadFooter();
     // Load the landing page
     navigateToPage('landing');
 
@@ -127,7 +128,14 @@ function hideAllPages(){
         $('#' + pageViews[view]).attr('class', 'hide');
     }
 }
-
+function loadFooter(){
+    // create a footer row
+    $('#footer').append($('<div id="footer-row" class="row"></div>'));
+    // add footer column
+    $('#footer-row').append($('<div id="footer-col" class="col-5 m-auto text-center"></div>'));
+    // add footer
+    $('#footer-col').append($('<p class="my-5" id="copywrite-text">Korrin Franklin 2023 ©</p>'));
+}
 function loadHeader(){
     // create a header row
     $('#header').append($('<div id="logo-row" class="row py-2"></div>'));
@@ -135,6 +143,10 @@ function loadHeader(){
     $('#logo-row').append($('<div id="logo-col" class="col-3 m-auto"></div>'));
     // add logo
     $('#logo-col').append($('<img id="logo" class="img-fluid" src="assets/images/logo.png" alt="logo"/>'));
+}
+function clearContent(elementId){
+    // clear the content of the element
+    $('#' + elementId).empty();
 }
 
 // Call the initializeApp function when the DOM is ready
