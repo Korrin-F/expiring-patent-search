@@ -151,4 +151,8 @@ function clearContent(elementId){
 
 // Call the initializeApp function when the DOM is ready
 document.addEventListener('DOMContentLoaded', initializeApp);
-
+// add event listener for the favorites tab
+$('#myTabs').on('click', '#favorites-tab', function(event){
+    event.preventDefault();
+    navigateToPage('favorites');
+});

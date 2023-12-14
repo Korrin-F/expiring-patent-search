@@ -1,5 +1,7 @@
 // Notion API
 // ------------------------------
+
+
 function createHeading2Block(heading) {
     return {
         "object": "block",
@@ -33,7 +35,10 @@ function createParagraphBlock(paragraph) {
       }
 }
 
-function createNotionDatabaseEntry(data){
+function createNotionDatabaseData(data){
+    let secrets = getSecrets();
+    console.log(secrets);
+
     let patentViewData = data
     // let notionData = {
     //     id, 
@@ -119,10 +124,10 @@ function createNotionDatabaseEntry(data){
             }
         }
     }
-
+    let notionDatabase = secrets.notionSecrets.NOTION_DATABASE;
     return {
         "parent": {
-          "database_id": notion.NOTION_DATABASE
+          "database_id": notionDatabase
         },
         "properties": {
           "filing_date": {
@@ -158,21 +163,26 @@ function createNotionDatabaseEntry(data){
 }
 
 function newNotionDatabaseEntry(data){
+    let secrets = getSecrets();
+    console.log(secrets);
+
     let rawNotionData = JSON.stringify(data);
+    let key = secrets.notionSecrets.NOTION_KEY;
+    let version = secrets.notionSecrets.NOTION_VERSION;
 
     let notionHeaders = new Headers();
-    notionHeaders.append("Authorization", `Bearer ${notion.NOTION_KEY}`);
+    notionHeaders.append("Authorization", `Bearer ${key}`);
     notionHeaders.append("Content-Type", "application/json");
-    notionHeaders.append("Notion-Version", `${notion.NOTION_VERSION}`);
+    notionHeaders.append("Notion-Version", version);
     
     let notionRequestOptions = {
         method: 'POST',
-        headers: myHeaders,
+        headers: notionHeaders,
         body: rawNotionData,
         redirect: 'follow'
       };
 
-    return fetch("https://api.notion.com/v1/pages/:id", notionRequestOptions)
+    return fetch("https://api.notion.com/v1/pages/", notionRequestOptions)
     .then(response => response.json())
     .catch(error => {console.error(error);
     throw error; // Re-throw the error to be caught by the caller

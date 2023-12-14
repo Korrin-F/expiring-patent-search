@@ -15,7 +15,7 @@
 
 // total_patent_count: 1
 
-
+let notionData;
 
 function loadPatentViewPage(data){
     const resultsData = data;
@@ -181,7 +181,7 @@ function loadPatentViewPage(data){
     createListGroupItem(abstractCol, "abstract", abstract);
 
     // --- Data Object for API ---
-    let notionData = {
+    notionData = {
         id, 
         title,
         abstract,
@@ -193,7 +193,7 @@ function loadPatentViewPage(data){
         inventorsArray,
         assigneesArray
     }
-    createNotionDatabaseEntry(notionData);
+    
 }
 
 function createInputGroup(appendTo, id){
@@ -247,3 +247,36 @@ function createListGroupItem(appendTo, id, text){
     listGroupItem.text(text);
     listGroupItem.appendTo(appendTo);
 }
+
+$('#main').on("click", '#patentView-container', async function(event) {
+    event.preventDefault();
+    console.log("patentView-container clicked");
+    // if the target is a button
+    if (event.target.tagName === "BUTTON") {
+        event.stopPropagation(); //the click was registering twice
+
+        // create a local storage container if it does not exist called favorites
+        if (localStorage.getItem("favorites") === null) {
+            localStorage.setItem("favorites", JSON.stringify([notionData]));
+        }// if the favorites container does exist add the new data to it
+        else {
+            let favorites = JSON.parse(localStorage.getItem("favorites"));
+            favorites.push(notionData);
+            localStorage.setItem("favorites", JSON.stringify(favorites));
+        }
+
+
+        // --- Send Data to Notion --- (error with cors? preflight check failed)
+        // let notionQueryData = createNotionDatabaseData(notionData);
+        
+        // try {
+        //     let response = await newNotionDatabaseEntry(notionQueryData);
+        //     console.log(response);
+        //     navigateToPage('patentView', response);
+        // } catch (error) {
+        //     // Handle errors here
+        //     console.error(error);
+        // }
+    } 
+});
+
