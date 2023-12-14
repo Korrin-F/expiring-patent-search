@@ -30,6 +30,8 @@ function loadPatentViewPage(data){
     let patent_processing_time = resultsData.patents[0].patent_processing_time;
     let inventorsArray = resultsData.patents[0].inventors;
     let assigneesArray = resultsData.patents[0].assignees;
+    let expiryDate = "";
+
     //console log the data values 
     console.log("id: " + id);
     console.log("title: " + title);
@@ -109,7 +111,7 @@ function loadPatentViewPage(data){
     // create a text field
     // check if the patent_processing_time is null
     if (patent_processing_time !== undefined && patent_processing_time !== null) {
-        const expiryDate = addDaysToDate(filingDate, patent_processing_time);
+        expiryDate = addDaysToDate(filingDate, patent_processing_time);
         createInputGroupText(expiringGroup, "expiring", expiryDate);
     } else {
         const newDateStr = addYearsToDate(filingDate, 20);
@@ -178,7 +180,20 @@ function loadPatentViewPage(data){
     // create a text field to hold the abstract
     createListGroupItem(abstractCol, "abstract", abstract);
 
-
+    // --- Data Object for API ---
+    let notionData = {
+        id, 
+        title,
+        abstract,
+        grantYear,
+        filingDate,
+        expiryDate,
+        totalInventors,
+        totalAssignees,
+        inventorsArray,
+        assigneesArray
+    }
+    createNotionDatabaseEntry(notionData);
 }
 
 function createInputGroup(appendTo, id){
