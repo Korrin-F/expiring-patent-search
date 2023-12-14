@@ -27,7 +27,7 @@ function loadPatentViewPage(data){
     let abstract = resultsData.patents[0].patent_abstract;
     let grantYear = resultsData.patents[0].patent_year;
     let filingDate = resultsData.patents[0].applications[0].app_date;
-    let patent_processing_time = resultsData.patents[0].patent_processing_time;
+    let processingTime = resultsData.patents[0].patent_processing_time;
     let inventorsArray = resultsData.patents[0].inventors;
     let assigneesArray = resultsData.patents[0].assignees;
     let expiryDate = "";
@@ -38,7 +38,7 @@ function loadPatentViewPage(data){
     console.log("abstract: " + abstract);
     console.log("grantYear: " + grantYear);
     console.log("filingDate: " + filingDate);
-    console.log("patent_processing_time: " + patent_processing_time);
+    console.log("patent_processing_time: " + processingTime);
     console.log("inventorsArray: " + inventorsArray);
     console.log("assigneesArray: " + assigneesArray);
     // total inventors
@@ -55,18 +55,22 @@ function loadPatentViewPage(data){
     // --- Header ---
     createRow(pageName + "-header", mainSection, "div");
     const headerRow = $("#" + pageName + "-header-row");
-    headerRow.append($(`<h2 id="${pageName}-header" class="text-center">${title}</h2>`));
-    console.log("made header row");
+    headerRow.addClass("mt-4 mb-3");
+    // col for header
+    createCol(headerRow, pageName + "-header");
+    const headerCol = $("#patentView-header-col");
+    headerCol.addClass("col-9 mx-auto");
+    headerCol.append($(`<h1 id="${pageName}-header" class="text-center">${title}</h1>`));
+   
     // --- ID and Save Button Row ---
     createRow("save-id", $('#patentView-container'), "div");
-    console.log("made save-id row");
     const idRow = $("#save-id-row");
-    idRow.addClass("justify-content-center my-2");
+    idRow.addClass("justify-content-between my-2");
 
     // --- ID Col & Group ---
     createCol(idRow, "id");
     const idCol = $("#id-col");
-    idCol.addClass("col-3");
+    idCol.addClass("col-6");
     createInputGroup(idCol, "id");
 
     // --- ID Header ---
@@ -85,15 +89,15 @@ function loadPatentViewPage(data){
     // create a row to hold the dates
     createRow("dates", mainSection, "div");
     const datesRow = $("#dates-row");
-    datesRow.addClass("justify-content-center");
+    datesRow.addClass("justify-content-start my-3");
     // create a column to hold the filing date
     createCol(datesRow, "filing"); 
     const filingCol = $("#filing-col");
-    filingCol.addClass("col-5");
+    filingCol.addClass("col-6");
     // create an input group to hold the filing date
     createInputGroup(filingCol, "filing");
     const filingGroup = $("#filing-group");
-    filingGroup.addClass("justify-content-center");
+    filingGroup.addClass("justify-content-start");
     // create a header field
     createInputGroupHeader(filingGroup, "filing", "Filing Date");
     // create a text field
@@ -101,17 +105,17 @@ function loadPatentViewPage(data){
     // create a column to hold the expiring date
     createCol(datesRow, "expiring");
     const expiringCol = $("#expiring-col");
-    expiringCol.addClass("col-5");
+    expiringCol.addClass("col-6");
     // create an input group to hold the expiring date
     createInputGroup(expiringCol, "expiring");
     const expiringGroup = $("#expiring-group");
-    expiringGroup.addClass("justify-content-center");
+    expiringGroup.addClass("justify-content-start");
     // create a header field
     createInputGroupHeader(expiringGroup, "expiring", "Expiring Date");
     // create a text field
     // check if the patent_processing_time is null
-    if (patent_processing_time !== undefined && patent_processing_time !== null) {
-        expiryDate = addDaysToDate(filingDate, patent_processing_time);
+    if (processingTime !== undefined && processingTime !== null) {
+        expiryDate = addDaysToDate(filingDate, processingTime);
         createInputGroupText(expiringGroup, "expiring", expiryDate);
     } else {
         const newDateStr = addYearsToDate(filingDate, 20);
@@ -122,6 +126,7 @@ function loadPatentViewPage(data){
     // create a row to hold the assignee and inventor
     createRow("assignee-inventor", mainSection, "div");
     const assigneeInventorRow = $("#assignee-inventor-row");
+    assigneeInventorRow.addClass("my-3");
     // create a col to hold the assignee
     createCol(assigneeInventorRow, "assignee");
     const assigneeCol = $("#assignee-col");
@@ -172,6 +177,7 @@ function loadPatentViewPage(data){
     // create a row to hold the abstract
     createRow("abstract", mainSection, "div");
     const abstractRow = $("#abstract-row");
+    abstractRow.addClass("my-3");
     // create a col to hold the abstract
     createCol(abstractRow, "abstract");
     const abstractCol = $("#abstract-col");
@@ -179,6 +185,9 @@ function loadPatentViewPage(data){
     createInputGroupHeader(abstractCol, "abstract", "Abstract");
     // create a text field to hold the abstract
     createListGroupItem(abstractCol, "abstract", abstract);
+    // text var
+    let abstractText = $("#abstract-list-group-item");
+    abstractText.addClass("p-2");
 
     // --- Data Object for API ---
     notionData = {
@@ -187,6 +196,7 @@ function loadPatentViewPage(data){
         abstract,
         grantYear,
         filingDate,
+        processingTime,
         expiryDate,
         totalInventors,
         totalAssignees,

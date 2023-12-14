@@ -15,7 +15,8 @@ function loadSearchResultsPage(data){
     // --- Header ---
     createRow(pageName + "-header", mainContent, "div");
     const headerRow = $("#" + pageName + "-header-row");
-    headerRow.append($(`<h2 id="${pageName}-header" class="text-center">Search Results</h2>`));
+    headerRow.addClass("text-center mt-4 mt-3");
+    headerRow.append($(`<h1 id="${pageName}-header" class="text-center">Search Results</h1>`));
 
     // --- Info Row ---
     createRow(pageName + "-info", mainContent, "div");

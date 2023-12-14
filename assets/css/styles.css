@@ -1,10 +1,12 @@
 
 :root {
-  --deep-blue-navy: #001F3F;
+  /* --deep-blue-navy: #001F3F; */
   --white: #FFFFFF;
   --light-gray-background: #F5F5F5;
-  --green-teal: #008080;
-  --gold-yellow: #FFD700;
+  --cool-grey: #8C86AA;
+  --green-mint: #9FD8CB;
+  --gold-yellow: #E2C044;
+  --bright-blue: #3C91E6;
   --graphite-charcoal: #333333;
 
   --dark-green: rgba(40, 66, 81, 1.00);
@@ -13,9 +15,64 @@
   --ivory: rgba(255, 254, 238, 1.00);
 }
 
+* {
+  /* font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif */
+  color: var(--dark-green)
+}
+li,
+li .active,
+.list-group-item,
+#start-year option,
+#end-year option{
+  /* font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif */
+  color: var(--dark-green)!important;
+}
+h1, h2, h3, h4, h5, h6 {
+  color: var(--dark-green);
+  /* font-family:Verdana, Geneva, Tahoma, sans-serif; */
+}
+h2, h3, h4, h5{
+  font-size: large;
+  font-weight: 600;
+}
+/* h3 em {
+  font-size: large;
+} */
+body {
+  background-color: var(--light-gray-background);
+  /* make into a flex column */
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; 
+}
+main {
+  background-color: var(--white);
+  flex-grow: 1;
+}
 #logo-row {
   background-color: var(--dark-green);
 }
 #footer {
   background-color: var(--dark-green);
+}
+.btn-primary {
+  background-color: var(--bright-blue);
+  border-color: var(--bright-blue);
+}
+.btn-primary:hover {
+  background-color: var(--green-mint);
+  border-color: var(--green-mint);
+}
+.nav-item button {
+  color: var(--bright-blue);
+}
+.nav-item button:hover {
+  color: var(--green-mint);
+}
+.input-group-text {
+  /* background-color: var(--light-gray-background); */
+  /* border-color: var(--light-gray-background); */
+}
+#copywrite-text {
+  color: var(--green-mint);
 }

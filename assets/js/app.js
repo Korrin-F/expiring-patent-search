@@ -39,6 +39,7 @@ function navigateToPage(newPage, data){
             break;
         case 'favorites':
             hideTabs('favorites');
+            clearContent('favorites-container');
             loadFavoritesPage();
             showTab('favorites');
             break;
@@ -142,7 +143,7 @@ function loadHeader(){
     // add logo column
     $('#logo-row').append($('<div id="logo-col" class="col-3 m-auto"></div>'));
     // add logo
-    $('#logo-col').append($('<img id="logo" class="img-fluid" src="assets/images/logo.png" alt="logo"/>'));
+    $('#logo-col').append($('<img id="logo" class="img-fluid" src="assets/images/logo-white.png" alt="logo"/>'));
 }
 function clearContent(elementId){
     // clear the content of the element

@@ -34,15 +34,24 @@ function loadLandingPage() {
     // Main Header Row
     createRow("main-header", formContainer, "div");
     const mainHeaderDiv = $('#main-header-row');
-    mainHeaderDiv.append("<h2 class='col'>Expiring Patent Search</h2>");
+    // header column
+    createCol(mainHeaderDiv, "header")
+    const headerCol = $('#header-col');
+    headerCol.addClass("mx-auto col-10 text-center mt-4 mb-3");
+    headerCol.append("<h1>Expiring Patent Search</h1>");
 
     // Date Range Selector Row
     createRow(Object.keys(mainSearchOption)[0], formContainer, "div");
-
+  
     // Sub-header Row title Optional 
     createRow("sub-header", formContainer, "div");
     const subHeaderDiv = $('#sub-header-row');
-    subHeaderDiv.append("<h3 class='col'>Optional</h3>");
+    subHeaderDiv.addClass("mt-4 mb-2");
+    createCol(subHeaderDiv, "sub-header");
+    const subHeaderCol = $('#sub-header-col');
+    subHeaderCol.addClass("mx-auto col-10 text-center");
+    subHeaderDiv.append(subHeaderCol)
+    subHeaderCol.append("<h3><em>Optional</em></h3>");
 
     // create a container to hold all the options
     const optionsContainer = $('<div id="options-container" class="container-fluid p-0"></div>');
@@ -51,6 +60,8 @@ function loadLandingPage() {
     //  --- Rows for Optional Options ---
     for(const value in optionalSearchOptions){
         createRow(value, optionsContainer, "div");
+        // let row = $("#" + value + "-row");
+        // row.addClass("my-2");
     }
     //  --- Header Columns for Optional Options ---
     for(const key in optionalSearchOptions){
@@ -74,6 +85,7 @@ function loadLandingPage() {
         }
     }
     const expiryYearRangeRow = $('#expiryYearRange-row');
+    expiryYearRangeRow.addClass("my-2");
     // Create and append start year dropdown with a range of years
     createDropdown('Start Year', 'startYear', currentYear-5, currentYear+5, expiryYearRangeRow); 
     // Create and append end year dropdown with a range of years
@@ -111,7 +123,9 @@ function loadLandingPage() {
 
     createRow("search-button", formContainer, "div");
     const searchButtonDiv = $('#search-button-row');
-    searchButtonDiv.append("<button id='search-button' class='btn btn-primary' type='submit' form='form-container' value='Submit' >Search</button>");
+    searchButtonDiv.append('<div class="col col-12 text-center" id="search-button-col"></div>');
+    let searchButtonCol = $('#search-button-col');
+    searchButtonCol.append("<button id='search-button' class='btn btn-primary w-100 h-100' type='submit' form='form-container' value='Submit' >Search</button>");
     // type='submit' form='form-container' value='Submit'
 }
 
@@ -140,8 +154,8 @@ function createRow(id, container, type) {
 // --- CREATE A SEARCH HEADER ---
 function createSearchHeader(key,value){
     const row = $("#" + key + "-row");
-    row.attr('class', 'input-group');
-    const header = $(`<span class="input-group-text" id="${key}-header"><h4>${value}</h4></span>`);
+    row.attr('class', 'input-group my-2');
+    const header = $(`<span class="input-group-text " id="${key}-header"><h4 class="mb-1">${value}</h4></span>`);
     row.append(header);
 }
 
