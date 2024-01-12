@@ -28,6 +28,7 @@ function navigateToPage(newPage, data){
             break;
         case 'searchResults':
             hideTabs('searchResults');
+            clearContent('searchResults-container');
             loadSearchResultsPage(data);
             showTab('searchResults');           
             break;
