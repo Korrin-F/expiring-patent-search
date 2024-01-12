@@ -71,7 +71,7 @@ function loadLandingPage() {
         }
     }
 
-
+    
 
     // ---------------------------
     // INPUT FEILDS 
@@ -123,10 +123,17 @@ function loadLandingPage() {
 
     createRow("search-button", formContainer, "div");
     const searchButtonDiv = $('#search-button-row');
+    searchButtonDiv.addClass('text-center justify-content-center')
     searchButtonDiv.append('<div class="col col-12 text-center" id="search-button-col"></div>');
     let searchButtonCol = $('#search-button-col');
     searchButtonCol.append("<button id='search-button' class='btn btn-primary w-100 h-100' type='submit' form='form-container' value='Submit' >Search</button>");
     // type='submit' form='form-container' value='Submit'
+    // ---- Note on load speeds ----
+    createRow('search-note', searchButtonDiv, 'p');
+    const searchNote = $('#search-note-row');
+    searchNote.text('Search results will load when the data has been recieved. This may take a moment depending on your internet speed and search criteria.');
+    searchNote.attr('class','col col-12 text-center mt-2 px-3')
+    
 }
 
 

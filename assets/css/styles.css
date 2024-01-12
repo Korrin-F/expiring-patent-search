@@ -76,3 +76,7 @@ main {
 #copywrite-text {
   color: var(--green-mint);
 }
+#search-note-row {
+  color: var(--gold-yellow);
+  font-style: italic;
+}
